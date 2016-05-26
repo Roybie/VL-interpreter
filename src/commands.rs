@@ -1,10 +1,11 @@
 use ast::Ast;
+use std::fmt;
 
 /**
  * Representation of commands for AST
  */
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Command {
     // Manipulate <value>
     Put,            // p
@@ -31,7 +32,6 @@ pub enum Command {
     VInt,           // v :- copy <value> to <int>
     Rep,            // . :- do last command or Grp <int> times
     LP,             // ( :- start Grp
-    RP,             // ) :- end Grp
     // Group of commands inside () for loops
     Grp(Ast),
     Comment,        //comment
@@ -63,16 +63,25 @@ impl Command {
             'v' => Command::VInt,
             '.' => Command::Rep,
             '(' => Command::LP,
-            //')' => Command::RP,
             '/' => Command::Comment,
             _ => Command::Nil,
         }
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Type {
     S(String),
     I(i64),
     C(char),
+}
+
+impl fmt::Display for Type {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self.clone() {
+            Type::S(data) => write!(f, "{}", data),
+            Type::I(data) => write!(f, "{}", data),
+            Type::C(data) => write!(f, "{}", data),
+        }
+    }
 }

@@ -1,5 +1,6 @@
 pub mod ast;
 pub mod commands;
+pub mod interpreter;
 
 use std::env;
 use std::error::Error;
@@ -27,8 +28,12 @@ fn main() {
     //TODO error checking here
     file.read_to_string(&mut s).unwrap();
 
-    println!("{}", s);
+    //println!("{}", s);
 
-    println!("{:?}", ast::parse(s));
+    //println!("{:?}", ast::parse(s));
+
+    let program = ast::parse(s);
+    interpreter::run(program);
+
 }
 
