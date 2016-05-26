@@ -86,7 +86,7 @@ Programs can access 26 'marks', named a to z by setting the pointer i.e. `'a`
 
 Each mark is an array which can hold Strings, Integers, or Characters
 
-The \<value> register always points to the <pointer> \<index> value.
+The \<value> register always points to the \<pointer> \<index> value.
 
 For example if \<pointer> = b and \<index> = 3 \<value> will be whatever value is stored at b[3]
 
@@ -94,4 +94,4 @@ For example if \<pointer> = b and \<index> = 3 \<value> will be whatever value i
 
 This is one way of outputting b[3].
 
-Values are 0 by default and <pointer><index> points to a[0] by default
+Values are 0 by default and \<pointer>\<index> points to a[0] by default
