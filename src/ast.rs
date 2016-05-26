@@ -17,6 +17,7 @@ pub struct Parser {
 impl Parser {
     pub fn parse(&mut self) -> Ast {
         let mut coms = Ast::new();
+        coms.push(Command::Line);
 
         loop {
             self.consume_whitespace();

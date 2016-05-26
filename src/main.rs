@@ -33,6 +33,7 @@ fn main() {
     //println!("{:?}", ast::parse(s));
 
     let program = ast::parse(s);
+    println!("{:?}", program);
     interpreter::run(program);
 
 }
