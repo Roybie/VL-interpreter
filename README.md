@@ -75,9 +75,9 @@ Groups are performed \<int> times.
 
 `10(ap)`
 
-\<int> is 1 by default and reset to 1 after each command
-
 This sets \<int> to 10 then performs the functions ap ten times, resulting in the numbers 1 to 10 being outputted.
+
+\<int> is 1 by default and reset to 1 after each command
 
 
 # VL structure
