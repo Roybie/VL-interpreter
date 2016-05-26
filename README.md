@@ -35,7 +35,7 @@ Manipulate \<pointer>
 
 `'` Set \<pointer> to character following ' and \<index> to 0
 
-`\` Set \<pointer> to character following \` and \<index> to \<value>
+`` ` `` Set \<pointer> to character following \` and \<index> to \<value>
 
 `]` Increase \<pointer> to next mark (a -> b -> c etc)
 
