@@ -1,6 +1,8 @@
 use ast::Ast;
 use commands::{Command, Type};
 
+use std::io;
+
 pub struct Interpreter {
     values: Vec<Vec<Type>>,
     pointer: usize,
@@ -116,7 +118,23 @@ impl Interpreter {
                 println!("{}", self.value);
             },
             Command::In => {
-                //TODO
+                let mut input = String::new();
+                match io::stdin().read_line(&mut input) {
+                    Ok(_) => {
+                        input = input.trim().to_owned();
+                        let val = match input.parse::<i64>() {
+                            Ok(n) => Type::I(n),
+                            Err(_) => {
+                                match input.len() {
+                                    1 => Type::C(input.pop().unwrap()),
+                                    _ => Type::S(input),
+                                }
+                            },
+                        };
+                        self.value = val.clone();
+                    },
+                    _ => (),
+                }
             },
             Command::Put => {
                 self.last = command;
