@@ -7,9 +7,12 @@ use std::fmt;
 
 #[derive(Debug, Clone)]
 pub enum Command {
+    // stdio
+    Out,            //w
+    In,             //e
     // Manipulate <value>
-    Put,            // p
-    Yank,           // y
+    Put,            // put value in selected memory
+    Yank,           // y value from selected memory
     Ins(Type),      // i<string>
     Incr,           // a
     Decr,           // x
@@ -21,6 +24,7 @@ pub enum Command {
     NInd,           // } :- increase <index>
     PInd,           // { :- decrease <index>
     // Program Flow (jumps)
+    BLine,          // ^ Jump to beginning of current line
     Line,           // New line used for Down and Up commands
     Down,           // j :- jump down <int> lines
     Up,             // k :- jump up <int> lines
@@ -41,6 +45,8 @@ pub enum Command {
 impl Command {
     pub fn from_char(inp: char) -> Command {
         match inp {
+            'w' => Command::Out,
+            'e' => Command::In,
             'p' => Command::Put,
             'y' => Command::Yank,
             'i' => Command::Ins(Type::C('a')),
@@ -52,6 +58,7 @@ impl Command {
             '[' => Command::PMar,
             '}' => Command::NInd,
             '{' => Command::PInd,
+            '^' => Command::BLine,
             '\n' => Command::Line,
             'j' => Command::Down,
             'k' => Command::Up,

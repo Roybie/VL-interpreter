@@ -1,15 +1,19 @@
 # VL Interpreter
 Interpreter for the VL language
 
-WIP: CURRENTLY ONLY PARSES BUT DOES NOT INTERPRET
+Needs Rust installed to run atm.
+
+*WIP*
 
 usage:
 
-- vl filename.vl
+- vl sourcefile
 
 or
 
-- cargo run filename.vl
+- cargo run sourcefile
+
+see examples folder for source code examples
 
 # VL specification
 
@@ -17,25 +21,29 @@ Commands:
 
 Manipulate \<value>:
 
-`p` Puts \<value> to stdout
+`w` Puts \<value> to stdout
 
-`y` Assigns stdin to \<value>
+`e` Assigns stdin to \<value>
 
-`i` Enter insert mode, insert characters following i up until unescaped ('\') ';' into \<value>
+`p` Puts \<value> into currently selected memory
+
+`y` Copies current selected memory value into \<value>
+
+`i` Enter insert mode, insert characters following i up until unescaped ('\') ';' into \<value> and currently selected memory
 
 `;` (insert mode only) Escape insert mode setting \<value>
 
 `\` (insert mode only) Treat next ; as normal part of string
 
-`a` Increment \<value> by 1 if Integer or Character type
+`a` Increment currently selected memory value by 1 if Integer or Character type and set \<value>
 
-`x` Decrement \<value> by 1 if Integer or Character type
+`x` Decrement currently selected memory value by 1 if Integer or Character type and set \<value>
 
 Manipulate \<pointer>
 
 `'` Set \<pointer> to character following ' and \<index> to 0
 
-`` ` `` Set \<pointer> to character following \` and \<index> to \<value>
+`` ` `` Set \<pointer> to character following \` and \<index> to \<int>
 
 `]` Increase \<pointer> to next mark (a -> b -> c etc)
 
@@ -47,13 +55,15 @@ Manipulate \<pointer>
 
 Program Flow
 
+`^` Jump to beginning of current line
+
 `j` Jump \<int> lines down
 
 `k` Jump \<int> lines up
 
-`f` Jump to \<int>th next instance of character following f on same line
+`f` *UNIMPLEMENTED* Jump to \<int>th next instance of character following f on same line
 
-`F` Jump to \<int>th previous instance of character following F on same line
+`F` *UNIMPLEMENTED* Jump to \<int>th previous instance of character following F on same line
 
 `?` Do following jump only if \<value> == \<int>
 

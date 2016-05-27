@@ -29,11 +29,7 @@ fn main() {
     file.read_to_string(&mut s).unwrap();
 
     //println!("{}", s);
-
-    //println!("{:?}", ast::parse(s));
-
     let program = ast::parse(s);
-    println!("{:?}", program);
     interpreter::run(program);
 
 }

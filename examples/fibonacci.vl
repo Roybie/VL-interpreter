@@ -1,0 +1,5 @@
+/fibonacci sequence up to 144/
+aw}aw       /set initial two ones and position pointer on third/
+}p          /set next number to previous/
+{{y}}v(a)   /increment by value of the previous previous/
+w144!2k     /write and then loop until 144/
