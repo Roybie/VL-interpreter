@@ -23,7 +23,7 @@ Manipulate \<value>:
 
 `w` Puts \<value> to stdout
 
-`e` Assigns stdin to \<value>
+`e` *NOT YET IMPLEMENTED* Assigns stdin to \<value>
 
 `p` Puts \<value> into currently selected memory
 
@@ -61,9 +61,9 @@ Program Flow
 
 `k` Jump \<int> lines up
 
-`f` *UNIMPLEMENTED* Jump to \<int>th next instance of character following f on same line
+`f` *NOT YET IMPLEMENTED* Jump to \<int>th next instance of character following f on same line
 
-`F` *UNIMPLEMENTED* Jump to \<int>th previous instance of character following F on same line
+`F` *NOT YET IMPLEMENTED* Jump to \<int>th previous instance of character following F on same line
 
 `?` Do following jump only if \<value> == \<int>
 
