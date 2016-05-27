@@ -9,6 +9,7 @@ use std::fmt;
 pub enum Command {
     // stdio
     Out,            //w
+    OutL,           //W
     In,             //e
     // Manipulate <value>
     Put,            // put value in selected memory
@@ -47,6 +48,7 @@ impl Command {
         match inp {
             'w' => Command::Out,
             'e' => Command::In,
+            'W' => Command::OutL,
             'p' => Command::Put,
             'y' => Command::Yank,
             'i' => Command::Ins(Type::C('a')),

@@ -23,6 +23,8 @@ Manipulate \<value>:
 
 `w` Puts \<value> to stdout
 
+`W` Puts \<value> to stdout new line version
+
 `e` *NOT YET IMPLEMENTED* Assigns stdin to \<value>
 
 `p` Puts \<value> into currently selected memory

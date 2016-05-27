@@ -109,6 +109,10 @@ impl Interpreter {
         match command.clone() {
             Command::Out => {
                 self.last = command;
+                print!("{}", self.value);
+            },
+            Command::OutL => {
+                self.last = command;
                 println!("{}", self.value);
             },
             Command::In => {
