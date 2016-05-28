@@ -81,6 +81,8 @@ Program Flow
 
 `)` End group
 
+`.` Repeat the previous repeatable command
+
 `/` Comment, anything between / pairs is ignored, must always be in pairs
 
 Groups are performed \<int> times.
