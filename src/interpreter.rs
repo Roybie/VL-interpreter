@@ -352,14 +352,14 @@ impl Interpreter {
             },
             &Command::LCon => {
                 self.dojump = match self.value {
-                    Type::I(int) => self.int < int as u64,
+                    Type::I(int) => int > self.int as i64,
                     _ => false,
                 };
                 self.int = 1;
             },
             &Command::GCon => {
                 self.dojump = match self.value {
-                    Type::I(int) => self.int > int as u64,
+                    Type::I(int) => int <  self.int as i64,
                     _ => false,
                 };
                 self.int = 1;
