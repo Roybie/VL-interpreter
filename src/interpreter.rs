@@ -79,6 +79,8 @@ impl Interpreter {
                     break;
                 },
                 //loopable commands
+                Command::Out |
+                Command::OutL |
                 Command::Incr |
                 Command::Decr |
                 Command::NMar |
@@ -216,11 +218,12 @@ impl Interpreter {
             &Command::Divide => {
                 match self.value {
                     Type::I(v) => {
+                        let modu = v % self.int as i64;
                         self.value = Type::I(v / self.int as i64);
+                        self.int = modu as u64;
                     },
                     _ => (),
                 }
-                self.int = 1;
             },
             &Command::Mark(ref mark) => {
                 match mark {
@@ -368,6 +371,9 @@ impl Interpreter {
                     _ => { panic!("value not an integer"); },
                 }
             },
+            &Command::IntV => {
+                self.value = Type::I(self.int as i64);
+            }
             &Command::Grp(ref group) => {
                 self.do_group(group);
             },

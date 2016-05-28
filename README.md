@@ -49,7 +49,9 @@ Arithmetic
 
 `*` Set \<value> to \<value> * \<int>
 
-`/` Set \<value> to \<value> / \<int>
+`/` Set \<value> to \<value> / \<int> and set \<int> to \<value> % \<int>
+
+Divide is unique in that it sets the internal \<int> register and the \<value> register
 
 Manipulate \<pointer>
 
@@ -86,6 +88,8 @@ Program Flow
 `>` Do following jump only if \<value> < \<int>
 
 `v` Copy \<value> to \<int>
+
+`V` Copy \<int> to \<value>
 
 `(` Begin group
 
