@@ -1,5 +1,6 @@
-/fibonacci sequence up to 144/
-aW}aW       /set initial two ones and position pointer on third/
-}p          /set next number to previous/
-{{y}}v(a)   /increment by value of the previous previous/
-W144!2k     /write and then loop until 144/
+$ fibonacci sequence up to 50th term $
+aW}aW           $ set initial two ones and position pointer on third $
+'bi2;           $ 'b holds nth term counter $
+v`a2{y2}p       $ set next number to previous $
+{y}vy+p         $ increment by value of the previous previous $
+W'ba50!2k

@@ -113,7 +113,7 @@ impl Parser {
     }
 
     fn parse_com(&mut self) -> Command {
-         self.consume_while(|c| c != '/');
+         self.consume_while(|c| c != '$');
          self.pos = self.pos + 1;
          Command::Comment
     }

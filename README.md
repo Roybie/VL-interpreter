@@ -41,6 +41,16 @@ Manipulate \<value>:
 
 `x` Decrement currently selected memory value by 1 if Integer or Character type and set \<value>
 
+Arithmetic
+
+`+` Set \<value> to \<value> + \<int>
+
+`-` Set \<value> to \<value> - \<int>
+
+`*` Set \<value> to \<value> * \<int>
+
+`/` Set \<value> to \<value> / \<int>
+
 Manipulate \<pointer>
 
 `'` Set \<pointer> to character following ' and \<index> to 0
@@ -83,7 +93,7 @@ Program Flow
 
 `.` Repeat the previous repeatable command
 
-`/` Comment, anything between / pairs is ignored, must always be in pairs
+`$` Comment, anything between $ pairs is ignored, must always be in pairs
 
 Groups are performed \<int> times.
 

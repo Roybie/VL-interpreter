@@ -186,6 +186,42 @@ impl Interpreter {
                     _ => (),
                 }
             },
+            &Command::Plus => {
+                match self.value {
+                    Type::I(v) => {
+                        self.value = Type::I(v + self.int as i64);
+                    },
+                    _ => (),
+                }
+                self.int = 1;
+            },
+            &Command::Minus => {
+                match self.value {
+                    Type::I(v) => {
+                        self.value = Type::I(v - self.int as i64);
+                    },
+                    _ => (),
+                }
+                self.int = 1;
+            },
+            &Command::Times => {
+                match self.value {
+                    Type::I(v) => {
+                        self.value = Type::I(v * self.int as i64);
+                    },
+                    _ => (),
+                }
+                self.int = 1;
+            },
+            &Command::Divide => {
+                match self.value {
+                    Type::I(v) => {
+                        self.value = Type::I(v / self.int as i64);
+                    },
+                    _ => (),
+                }
+                self.int = 1;
+            },
             &Command::Mark(ref mark) => {
                 match mark {
                     &'a' ... 'z' => {

@@ -17,6 +17,11 @@ pub enum Command {
     Ins(Type),      // i<string>
     Incr,           // a
     Decr,           // x
+    //Arithmetic
+    Plus,
+    Minus,
+    Times,
+    Divide,
     // Manipulate <pointer> / <value>
     Mark(char),     // '<char>
     Ind(char),      // `<char>
@@ -56,6 +61,10 @@ impl Command {
             'i' => Command::Ins(Type::C('a')),
             'a' => Command::Incr,
             'x' => Command::Decr,
+            '+' => Command::Plus,
+            '-' => Command::Minus,
+            '*' => Command::Times,
+            '/' => Command::Divide,
             '\'' => Command::Mark('a'),
             '`' => Command::Ind('a'),
             ']' => Command::NMar,
@@ -76,7 +85,7 @@ impl Command {
             'v' => Command::VInt,
             '.' => Command::Rep,
             '(' => Command::LP,
-            '/' => Command::Comment,
+            '$' => Command::Comment,
             _ => Command::Nil,
         }
     }
