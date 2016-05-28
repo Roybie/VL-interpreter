@@ -394,6 +394,6 @@ impl Interpreter {
 pub fn run(program: Ast) -> usize {
     let mut interpreter = Interpreter::new(program);
     interpreter.run();
-    println!("{:?}", interpreter.values);
+    //println!("{:?}", interpreter.values);
     0
 }
