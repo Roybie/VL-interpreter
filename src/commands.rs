@@ -37,7 +37,7 @@ pub enum Command {
     GCon,           // > :- do jump if <value> < <int>
     Int(u64),       // set <int> to direct integer
     VInt,           // v :- copy <value> to <int>
-    //Rep,            // . :- do last command or Grp <int> times
+    Rep,            // . :- do last command or Grp <int> times
     LP,             // ( :- start Grp
     // Group of commands inside () for loops
     Grp(Ast),
@@ -74,7 +74,7 @@ impl Command {
             '>' => Command::GCon,
             '0'...'9' => Command::Int(inp as u64),
             'v' => Command::VInt,
-            //'.' => Command::Rep,
+            '.' => Command::Rep,
             '(' => Command::LP,
             '/' => Command::Comment,
             _ => Command::Nil,

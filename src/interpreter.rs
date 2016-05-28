@@ -10,7 +10,9 @@ pub struct Interpreter {
     value: Type,
     int: u64,
     pc: usize,
+    last: usize,
     dojump: bool,
+    rep: bool,
 
     program: Ast,
 }
@@ -23,9 +25,11 @@ impl Interpreter {
             index: 0,
             int: 1,
             pc: 0,
+            last: 0,
             values: Vec::new(),
             value: Type::I(0),
             dojump: true,
+            rep: false,
             program: program,
         }
     }
@@ -83,7 +87,7 @@ impl Interpreter {
                 Command::PInd |
                 Command::Down |
                 Command::Up |
-                //Command::Rep |
+                Command::Rep |
                 Command::Next(_) |
                 Command::Prev(_) |
                 Command::Grp(_) => {
@@ -107,9 +111,15 @@ impl Interpreter {
     fn interpret(&mut self, command: &Command) {
         match command {
             &Command::Out => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
                 print!("{}", self.value);
             },
             &Command::OutL => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
                 println!("{}", self.value);
             },
             &Command::In => {
@@ -132,16 +142,28 @@ impl Interpreter {
                 }
             },
             &Command::Put => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
                 self.set_value();
             },
             &Command::Yank => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
                 self.get_value();
             },
             &Command::Ins(ref val) => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
                 self.value = val.clone();
                 self.set_value();
             },
             &Command::Incr => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
                 self.get_value();
                 match self.value {
                     Type::I(v) => {
@@ -152,6 +174,9 @@ impl Interpreter {
                 }
             },
             &Command::Decr => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
                 self.get_value();
                 match self.value {
                     Type::I(v) => {
@@ -310,6 +335,12 @@ impl Interpreter {
             &Command::Grp(ref group) => {
                 self.do_group(group);
             },
+            &Command::Rep => {
+                self.rep = true;
+                let command = self.program[self.last].clone();
+                self.interpret(&command);
+                self.rep = false;
+            }
             _ => (),
         }
     }
@@ -338,7 +369,7 @@ impl Interpreter {
                 Command::PInd |
                 Command::Down |
                 Command::Up |
-                //Command::Rep |
+                Command::Rep |
                 Command::Next(_) |
                 Command::Prev(_) |
                 Command::Grp(_) => {
@@ -362,5 +393,7 @@ impl Interpreter {
 
 pub fn run(program: Ast) -> usize {
     let mut interpreter = Interpreter::new(program);
-    interpreter.run()
+    interpreter.run();
+    println!("{:?}", interpreter.values);
+    0
 }
