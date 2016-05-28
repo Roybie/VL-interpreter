@@ -71,9 +71,11 @@ Program Flow
 
 `!` Do following jump only if \<value> != \<int>
 
-`v` Copy \<value> to \<int>
+`<` Do following jump only if \<value> > \<int>
 
-`.` Repeat last non-move command or group of commands
+`>` Do following jump only if \<value> < \<int>
+
+`v` Copy \<value> to \<int>
 
 `(` Begin group
 

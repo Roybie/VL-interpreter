@@ -1,0 +1,11 @@
+/Get 2 numbers from user input, add and print the result/
+'ciPlease Enter Number:;W
+'aep                                /first input into 'a/
+'cyW
+'bep                                /second input into 'b/
+'ayv                                /first input into int/
+'by<2j                              /if first value is smaller jump 2j/
+v'ay'dpa2j                             /second is smaller so use that for loop/
+'ayv'by'dpa                            /first is smaller so use that for loop/
+'ayw 'ei + ;w'byw 'ei = ;w'dyW      /print out answer/
+

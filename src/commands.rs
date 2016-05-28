@@ -33,9 +33,11 @@ pub enum Command {
     Prev(Box<Command>),     // F<char> :- jump back in line to <int>th <char> if exists
     Con,            // ? :- do jump if <value> == <int>
     NCon,           // ; :- do jump if <value> != <int>
+    LCon,           // < :- do jump if <value> > <int>
+    GCon,           // > :- do jump if <value> < <int>
     Int(u64),       // set <int> to direct integer
     VInt,           // v :- copy <value> to <int>
-    Rep,            // . :- do last command or Grp <int> times
+    //Rep,            // . :- do last command or Grp <int> times
     LP,             // ( :- start Grp
     // Group of commands inside () for loops
     Grp(Ast),
@@ -68,9 +70,11 @@ impl Command {
             'F' => Command::Prev(Box::new(Command::Nil)),
             '?' => Command::Con,
             '!' => Command::NCon,
+            '<' => Command::LCon,
+            '>' => Command::GCon,
             '0'...'9' => Command::Int(inp as u64),
             'v' => Command::VInt,
-            '.' => Command::Rep,
+            //'.' => Command::Rep,
             '(' => Command::LP,
             '/' => Command::Comment,
             _ => Command::Nil,
