@@ -31,6 +31,8 @@ Manipulate \<value>:
 
 `y` Copies current selected memory value into \<value>
 
+`Y` Copies current selected memory value into \<int>
+
 `i` Enter insert mode, insert characters following i up until unescaped ('\') ';' into \<value> and currently selected memory
 
 `;` (insert mode only) Escape insert mode setting \<value>

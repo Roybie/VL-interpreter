@@ -14,6 +14,7 @@ pub enum Command {
     // Manipulate <value>
     Put,            // put value in selected memory
     Yank,           // y value from selected memory
+    YankI,          // y int from selected memory
     Ins(Type),      // i<string>
     Incr,           // a
     Decr,           // x
@@ -59,6 +60,7 @@ impl Command {
             'W' => Command::OutL,
             'p' => Command::Put,
             'y' => Command::Yank,
+            'Y' => Command::YankI,
             'i' => Command::Ins(Type::C('a')),
             'a' => Command::Incr,
             'x' => Command::Decr,

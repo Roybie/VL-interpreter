@@ -34,12 +34,21 @@ impl Interpreter {
         }
     }
 
-    fn get_value(&mut self) {
+    fn get_value(&mut self, int: bool) {
         let mut existed = true;
         match self.values.get(self.pointer) {
             Some(value) => {
                 match value.get(self.index) {
-                    Some(typ) => { self.value = typ.clone(); },
+                    Some(typ) => {
+                        if int {
+                            match typ {
+                                &Type::I(i) => self.int = i as u64,
+                                _ => (),
+                            }
+                        } else {
+                            self.value = typ.clone();
+                        }
+                    },
                     None => {
                         existed = false;
                     },
@@ -153,7 +162,13 @@ impl Interpreter {
                 if !self.rep {
                     self.last = self.pc;
                 }
-                self.get_value();
+                self.get_value(false);
+            },
+            &Command::YankI => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
+                self.get_value(true);
             },
             &Command::Ins(ref val) => {
                 if !self.rep {
@@ -166,7 +181,7 @@ impl Interpreter {
                 if !self.rep {
                     self.last = self.pc;
                 }
-                self.get_value();
+                self.get_value(false);
                 match self.value {
                     Type::I(v) => {
                         self.value = Type::I(v + 1);
@@ -179,7 +194,7 @@ impl Interpreter {
                 if !self.rep {
                     self.last = self.pc;
                 }
-                self.get_value();
+                self.get_value(false);
                 match self.value {
                     Type::I(v) => {
                         self.value = Type::I(v - 1);
