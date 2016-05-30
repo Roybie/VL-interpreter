@@ -114,7 +114,7 @@ Divide is unique in that it sets the internal \<int> register and the \<value> r
 
 `)` End group
 
-`.` _(loopable)_ Repeat the previous repeatable command
+`.` _(loopable)_ Repeat the previous _(repeatable)_ command
 
 `$` Comment, anything between $ pairs is ignored, must always be in pairs
 
@@ -124,9 +124,9 @@ Groups are _(loopable)_ and so performed \<int> times.
 
 \<int> can be set directly by an integer i.e.
 
-`10(ap)`
+`10(aW)`
 
-This sets \<int> to 10 then performs the functions ap ten times, resulting in the numbers 1 to 10 being outputted.
+This sets \<int> to 10 then performs the following _(loopable)_ function ten times, in this case the group `(aW)` resulting in the numbers 1 to 10 being outputted.
 
 \<int> is 1 by default and reset to 1 after _(loopable)_ and _(resets int)_  commands, preserved otherwise.
 
