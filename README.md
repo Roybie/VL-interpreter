@@ -27,13 +27,13 @@ In source string mode (-s) when a ' is wanted in the string you must replace it 
 
 see examples folder for source code examples
 
-## TODO:
+### TODO:
 
 * Tests! Make use of rusts easy convenient test ability.
 * String manipulation. A language based on vim commands seems like it should have decent string manipulation.
 * Basic File IO. 
 
-## VL language
+### VL language
 
 Commands:
 
@@ -132,7 +132,7 @@ This sets \<int> to 10 then performs the following _(loopable)_ function ten tim
 \<int> is 1 by default and reset to 1 after _(loopable)_ and _(resets int)_  commands, preserved otherwise.
 
 
-## VL structure
+### VL structure
 
 Programs can access 26 'marks', named a to z by setting the pointer i.e. `'a`
 
