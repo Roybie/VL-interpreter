@@ -5,7 +5,7 @@ v.0.2ALPHA
 
 Needs Rust installed to run atm.
 
-Must be built with nightly or unstable.
+Must be built with rust nightly.
 
 Build with `cargo build --release`
 
