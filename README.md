@@ -137,3 +137,9 @@ Each mark is an array which can hold Strings, Integers, or Characters
 This is one way of outputting b[3].
 
 Values are 0 by default and \<pointer>\<index> points to a[0] by default
+
+## TODO:
+
+* Tests! Make use of rusts easy convenient test ability.
+* String manipulation. A language based on vim commands seems like it should have decent string manipulation.
+* Basic File IO. 
