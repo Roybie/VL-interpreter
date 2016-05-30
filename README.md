@@ -39,12 +39,21 @@ Commands:
 
 `e` Assigns stdin to \<value>
 
+#### Manipulate memory address pointers
 
-#### Manipulate registers:
+`'` Set \<pointer> to character following ' and \<index> to 0
 
-`p` _(repeatable)_ Puts \<value> into currently selected memory
+`` ` `` _(resets int)_ Set \<pointer> to character following \` and \<index> to \<int>
 
-`P` _(repeatable)_ Puts \<int> into currently selected memory
+`]` _(loopable)_ Increase \<pointer> to next mark (a -> b -> c etc)
+
+`[` _(loopable)_ Decrease \<pointer> to previous mark
+
+`}` _(loopable)_ Increase \<index>
+
+`{` _(loopable)_ Decrease \<index>
+
+#### Manipulate registers/memory
 
 `y` _(repeatable)_ Copies current selected memory value into \<value>
 
@@ -75,20 +84,6 @@ Commands:
 `/` Set \<value> to \<value> / \<int> and set \<int> to \<value> % \<int>
 
 Divide is unique in that it sets the internal \<int> register and the \<value> register
-
-#### Manipulate memory address pointers
-
-`'` Set \<pointer> to character following ' and \<index> to 0
-
-`` ` `` _(resets int)_ Set \<pointer> to character following \` and \<index> to \<int>
-
-`]` _(loopable)_ Increase \<pointer> to next mark (a -> b -> c etc)
-
-`[` _(loopable)_ Decrease \<pointer> to previous mark
-
-`}` _(loopable)_ Increase \<index>
-
-`{` _(loopable)_ Decrease \<index>
 
 #### Program Flow
 
