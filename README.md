@@ -89,9 +89,9 @@ Program Flow
 
 `k` Jump \<int> lines up
 
-`f` *NOT YET IMPLEMENTED* Jump to \<int>th next instance of character following f on same line
+`f` Jump to \<int>th next instance of character following f
 
-`F` *NOT YET IMPLEMENTED* Jump to \<int>th previous instance of character following F on same line
+`F` Jump to \<int>th previous instance of character following F
 
 `?` Do following jump only if \<value> == \<int>
 
