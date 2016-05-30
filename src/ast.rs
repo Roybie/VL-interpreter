@@ -120,6 +120,7 @@ impl Parser {
 
     fn parse_grp(&mut self) -> Command {
         let mut coms = Ast::new();
+        coms.push(Command::Line);
         loop {
             self.consume_whitespace();
             if self.eof() {

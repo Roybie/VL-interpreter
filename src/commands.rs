@@ -12,9 +12,10 @@ pub enum Command {
     OutL,           //W
     In,             //e
     // Manipulate <value>
-    Put,            // put value in selected memory
+    Put,            // p put value in selected memory
+    PutI,           // P put Int in selected memory
     Yank,           // y value from selected memory
-    YankI,          // y int from selected memory
+    YankI,          // Y int from selected memory
     Ins(Type),      // i<string>
     Incr,           // a
     Decr,           // x
@@ -42,8 +43,8 @@ pub enum Command {
     LCon,           // < :- do jump if <value> > <int>
     GCon,           // > :- do jump if <value> < <int>
     Int(u64),       // set <int> to direct integer
-    VInt,           // v :- copy <value> to <int>
-    IntV,           // v :- copy <int> to <value>
+    V2I,           // V :- copy <value> to <int>
+    I2V,           // v :- copy <int> to <value>
     Rep,            // . :- do last command or Grp <int> times
     LP,             // ( :- start Grp
     // Group of commands inside () for loops
@@ -59,6 +60,7 @@ impl Command {
             'e' => Command::In,
             'W' => Command::OutL,
             'p' => Command::Put,
+            'P' => Command::PutI,
             'y' => Command::Yank,
             'Y' => Command::YankI,
             'i' => Command::Ins(Type::C('a')),
@@ -85,8 +87,8 @@ impl Command {
             '<' => Command::LCon,
             '>' => Command::GCon,
             '0'...'9' => Command::Int(inp as u64),
-            'v' => Command::VInt,
-            'V' => Command::IntV,
+            'V' => Command::V2I,
+            'v' => Command::I2V,
             '.' => Command::Rep,
             '(' => Command::LP,
             '$' => Command::Comment,

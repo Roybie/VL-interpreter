@@ -1,17 +1,25 @@
 # VL Interpreter
 Interpreter for the VL language
 
+v.0.2ALPHA
+
 Needs Rust installed to run atm.
 
-*WIP*
+Build with `cargo build --release`
+
+Then run using binary in ./targets/release
 
 usage:
 
 - vl sourcefile
 
-or
+- vl -s 'source string'
 
-- cargo run sourcefile
+- vl -r  (repl mode)
+
+When a ' is wanted in the string you must replace it with: '\'' (thanks bash)
+
+(repl mode can only evaluate single line statements at a time)
 
 see examples folder for source code examples
 
@@ -28,6 +36,8 @@ Manipulate \<value>:
 `e` Assigns stdin to \<value>
 
 `p` Puts \<value> into currently selected memory
+
+`P` Puts \<int> into currently selected memory
 
 `y` Copies current selected memory value into \<value>
 
@@ -89,9 +99,9 @@ Program Flow
 
 `>` Do following jump only if \<value> < \<int>
 
-`v` Copy \<value> to \<int>
+`v` Copy \<int> to \<value>
 
-`V` Copy \<int> to \<value>
+`V` Copy \<value> to \<int>
 
 `(` Begin group
 
