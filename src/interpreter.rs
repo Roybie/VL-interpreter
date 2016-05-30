@@ -2,6 +2,7 @@ use ast::Ast;
 use commands::{Command, Type};
 
 use std::io;
+use std::intrinsics::discriminant_value;
 
 pub struct Interpreter {
     values: Vec<Vec<Type>>,
@@ -362,12 +363,45 @@ impl Interpreter {
                 self.dojump = true;
             }
             &Command::Next(ref next) => {
-                //TODO
-                self.dojump = true;
+                let mut found = false;
+                if self.dojump {
+                    let mut new_pc = self.pc + 1;
+                    for i in new_pc..self.program.len() {
+                        if unsafe { discriminant_value(&self.program[i]) == discriminant_value(&**next) } {
+                            new_pc = i;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if found {
+                        self.pc = new_pc;
+                    }
+                }
+                if self.int == 1 {
+                    self.dojump = true;
+                    if found {
+                        self.pc = self.pc - 1;
+                    }
+                }
             },
             &Command::Prev(ref prev) => {
-                //TODO
-                self.dojump = true;
+                let mut found = false;
+                if self.dojump {
+                    let mut new_pc = self.pc + 1;
+                    for i in (0..new_pc).rev() {
+                        if unsafe { discriminant_value(&self.program[i]) == discriminant_value(&**prev) } {
+                            new_pc = i - 1;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if found {
+                        self.pc = new_pc;
+                    }
+                }
+                if self.int == 1 {
+                    self.dojump = true;
+                }
             },
             &Command::Con => {
                 self.dojump = match self.value {

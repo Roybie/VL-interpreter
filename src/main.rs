@@ -1,3 +1,4 @@
+#![feature(core_intrinsics)]
 pub mod ast;
 pub mod commands;
 pub mod interpreter;

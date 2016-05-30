@@ -5,7 +5,7 @@ use std::fmt;
  * Representation of commands for AST
  */
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Command {
     // stdio
     Out,            //w
@@ -97,7 +97,7 @@ impl Command {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Type {
     S(String),
     I(i64),
