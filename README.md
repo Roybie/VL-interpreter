@@ -60,6 +60,10 @@ Commands:
 
 `x` _(loopable, repeatable)_ Decrement currently selected memory value by 1 if Integer or Character type and set \<value>
 
+`v` Copy \<int> to \<value>
+
+`V` Copy \<value> to \<int>
+
 #### Arithmetic
 
 `+` _(resets int)_ Set \<value> to \<value> + \<int>
@@ -105,10 +109,6 @@ Divide is unique in that it sets the internal \<int> register and the \<value> r
 `<` _(resets int)_ Do following jump only if \<value> > \<int>
 
 `>` _(resets int)_ Do following jump only if \<value> < \<int>
-
-`v` Copy \<int> to \<value>
-
-`V` Copy \<value> to \<int>
 
 `(` Begin group
 
