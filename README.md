@@ -17,7 +17,7 @@ usage:
 
 - vl -r  (repl mode)
 
-When a ' is wanted in the string you must replace it with: '\'' (thanks bash)
+In source string mode (-s) when a ' is wanted in the string you must replace it with: '\'' (thanks bash)
 
 (repl mode can only evaluate single line statements at a time)
 
