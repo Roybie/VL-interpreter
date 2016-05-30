@@ -1,17 +1,19 @@
 # VL Interpreter
 Interpreter for the VL language
 
-v.0.2ALPHA
+v.0.2alpha
 
-Needs Rust installed to run atm.
+### Requirements
 
-Must be built with rust nightly.
+Rust nightly
+
+### Build/Run
 
 Build with `cargo build --release`
 
-Then run using binary in ./targets/release
+Then run using vl binary in ./targets/release
 
-usage:
+e.g.
 
 - vl sourcefile
 
@@ -21,85 +23,88 @@ usage:
 
 In source string mode (-s) when a ' is wanted in the string you must replace it with: '\'' (thanks bash)
 
-(repl mode can only evaluate single line statements at a time)
+(repl mode can currently only evaluate single line statements at a time)
 
 see examples folder for source code examples
 
-# VL specification
+## VL language
 
 Commands:
 
-Manipulate \<value>:
+#### IO
 
-`w` Puts \<value> to stdout
+`w` _(loopable, repeatable)_ Puts \<value> to stdout
 
-`W` Puts \<value> to stdout new line version
+`W` _(loopable, repeatable)_ Puts \<value> to stdout new line version
 
 `e` Assigns stdin to \<value>
 
-`p` Puts \<value> into currently selected memory
 
-`P` Puts \<int> into currently selected memory
+#### Manipulate registers:
 
-`y` Copies current selected memory value into \<value>
+`p` _(repeatable)_ Puts \<value> into currently selected memory
 
-`Y` Copies current selected memory value into \<int>
+`P` _(repeatable)_ Puts \<int> into currently selected memory
 
-`i` Enter insert mode, insert characters following i up until unescaped ('\') ';' into \<value> and currently selected memory
+`y` _(repeatable)_ Copies current selected memory value into \<value>
 
-`;` (insert mode only) Escape insert mode setting \<value>
+`Y` _(repeatable)_ Copies current selected memory value into \<int>
 
-`\` (insert mode only) Treat next ; as normal part of string
+`i` _(repeatable)_ Enter insert mode, insert characters following i up until unescaped ('\') ';' into \<value> and currently selected memory
 
-`a` Increment currently selected memory value by 1 if Integer or Character type and set \<value>
+`;` _(insert mode only)_ Escape insert mode setting \<value>
 
-`x` Decrement currently selected memory value by 1 if Integer or Character type and set \<value>
+`\` _(insert mode only)_ Treat next ; as normal part of string
 
-Arithmetic
+`a` _(loopable, repeatable)_ Increment currently selected memory value by 1 if Integer or Character type and set \<value>
 
-`+` Set \<value> to \<value> + \<int>
+`x` _(loopable, repeatable)_ Decrement currently selected memory value by 1 if Integer or Character type and set \<value>
 
-`-` Set \<value> to \<value> - \<int>
+#### Arithmetic
 
-`*` Set \<value> to \<value> * \<int>
+`+` _(resets int)_ Set \<value> to \<value> + \<int>
+
+`-` _(resets int)_ Set \<value> to \<value> - \<int>
+
+`*` _(resets int)_ Set \<value> to \<value> * \<int>
 
 `/` Set \<value> to \<value> / \<int> and set \<int> to \<value> % \<int>
 
 Divide is unique in that it sets the internal \<int> register and the \<value> register
 
-Manipulate \<pointer>
+#### Manipulate memory address pointers
 
 `'` Set \<pointer> to character following ' and \<index> to 0
 
-`` ` `` Set \<pointer> to character following \` and \<index> to \<int>
+`` ` `` _(resets int)_ Set \<pointer> to character following \` and \<index> to \<int>
 
-`]` Increase \<pointer> to next mark (a -> b -> c etc)
+`]` _(loopable)_ Increase \<pointer> to next mark (a -> b -> c etc)
 
-`[` Decrease \<pointer> to previous mark
+`[` _(loopable)_ Decrease \<pointer> to previous mark
 
-`}` Increase \<index>
+`}` _(loopable)_ Increase \<index>
 
-`{` Decrease \<index>
+`{` _(loopable)_ Decrease \<index>
 
-Program Flow
+#### Program Flow
 
 `^` Jump to beginning of current line
 
-`j` Jump \<int> lines down
+`j` _(loopable)_ Jump \<int> lines down
 
-`k` Jump \<int> lines up
+`k` _(loopable)_ Jump \<int> lines up
 
-`f` Jump to \<int>th next instance of character following f
+`f` _(loopable)_ Jump to \<int>th next instance of character following f
 
-`F` Jump to \<int>th previous instance of character following F
+`F` _(loopable)_ Jump to \<int>th previous instance of character following F
 
-`?` Do following jump only if \<value> == \<int>
+`?` _(resets int)_ Do following jump only if \<value> == \<int>
 
-`!` Do following jump only if \<value> != \<int>
+`!` _(resets int)_ Do following jump only if \<value> != \<int>
 
-`<` Do following jump only if \<value> > \<int>
+`<` _(resets int)_ Do following jump only if \<value> > \<int>
 
-`>` Do following jump only if \<value> < \<int>
+`>` _(resets int)_ Do following jump only if \<value> < \<int>
 
 `v` Copy \<int> to \<value>
 
@@ -109,11 +114,13 @@ Program Flow
 
 `)` End group
 
-`.` Repeat the previous repeatable command
+`.` _(loopable)_ Repeat the previous repeatable command
 
 `$` Comment, anything between $ pairs is ignored, must always be in pairs
 
-Groups are performed \<int> times.
+Groups are treated as isolated code segments, memory and registers carry through from and over to the outside code, but program flow cannot jump out from a group until the end.
+
+Groups are _(loopable)_ and so performed \<int> times.
 
 \<int> can be set directly by an integer i.e.
 
@@ -121,10 +128,10 @@ Groups are performed \<int> times.
 
 This sets \<int> to 10 then performs the functions ap ten times, resulting in the numbers 1 to 10 being outputted.
 
-\<int> is 1 by default and reset to 1 after each command
+\<int> is 1 by default and reset to 1 after _(loopable)_ and _(resets int)_  commands, preserved otherwise.
 
 
-# VL structure
+## VL structure
 
 Programs can access 26 'marks', named a to z by setting the pointer i.e. `'a`
 
