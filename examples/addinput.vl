@@ -1,9 +1,9 @@
 $ Get 2 numbers from user input, add and print the result $
-'ciPlease Enter Number:;W
+'ciPlease Enter Number:;l
 'aep                                $ first input into 'a $
-'cyW
+'cyl
 'bep                                $ second input into 'b $
 'aY                                 $ first input into int $
 'by+'dp                             $ add and store result in 'd $
-'ayw'ei + ;w'byw 'ei = ;w'dyW       $ print out answer $
+'ayw'ei + ;w'byw 'ei = ;w'dyl       $ print out answer $
 

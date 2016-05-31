@@ -8,8 +8,10 @@ use std::fmt;
 #[derive(Debug, Clone, PartialEq)]
 pub enum Command {
     // stdio
-    Out,            //w
-    OutL,           //W
+    VOut,           //w
+    VOutL,          //l
+    IOut,           //W
+    IOutL,          //L
     In,             //e
     // Manipulate <value>
     Put,            // p put value in selected memory
@@ -56,9 +58,11 @@ pub enum Command {
 impl Command {
     pub fn from_char(inp: char) -> Command {
         match inp {
-            'w' => Command::Out,
+            'w' => Command::VOut,
+            'l' => Command::VOutL,
             'e' => Command::In,
-            'W' => Command::OutL,
+            'W' => Command::IOut,
+            'L' => Command::IOutL,
             'p' => Command::Put,
             'P' => Command::PutI,
             'y' => Command::Yank,

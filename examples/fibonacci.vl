@@ -1,6 +1,6 @@
 $ fibonacci sequence up to 50th term $
-aW}aW           $ set initial two ones and position pointer on third $
+al}al           $ set initial two ones and position pointer on third $
 'bi2;           $ 'b holds nth term counter $
 V`a2{y2}p       $ set next number to previous $
 {y}Y+p         $ increment by value of the previous previous $
-W'ba50!2k
+l'ba50!2k

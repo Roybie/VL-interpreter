@@ -31,7 +31,7 @@ see examples folder for source code examples
 
 * Tests! Make use of rusts easy convenient test ability.
 * String manipulation. A language based on vim commands seems like it should have decent string manipulation.
-* Basic File IO. 
+* Basic File IO.
 
 ### VL language
 
@@ -39,9 +39,13 @@ Commands:
 
 #### IO
 
-`w` _(loopable, repeatable)_ Puts \<value> to stdout
+`w` _(repeatable)_ Puts \<value> to stdout
 
-`W` _(loopable, repeatable)_ Puts \<value> to stdout new line version
+`W` _(repeatable)_ Puts \<int> to stdout
+
+`l` _(repeatable)_ Puts \<value> to stdout new line version
+
+`L` _(repeatable)_ Puts \<int> to stdout new line version
 
 `e` Assigns stdin to \<value>
 

@@ -101,8 +101,8 @@ impl Interpreter {
                     break;
                 },
                 //loopable commands
-                Command::Out |
-                Command::OutL |
+                //Command::Out |
+                //Command::OutL |
                 Command::Incr |
                 Command::Decr |
                 Command::NMar |
@@ -134,17 +134,29 @@ impl Interpreter {
 
     fn interpret(&mut self, command: &Command) {
         match command {
-            &Command::Out => {
+            &Command::VOut => {
                 if !self.rep {
                     self.last = self.pc;
                 }
                 print!("{}", self.value);
             },
-            &Command::OutL => {
+            &Command::VOutL => {
                 if !self.rep {
                     self.last = self.pc;
                 }
                 println!("{}", self.value);
+            },
+            &Command::IOut => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
+                print!("{}", self.int);
+            },
+            &Command::IOutL => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
+                println!("{}", self.int);
             },
             &Command::In => {
                 let mut input = String::new();
