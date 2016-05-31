@@ -112,7 +112,6 @@ impl Command {
 pub enum Type {
     S(String),
     I(i64),
-    C(char),
 }
 
 impl fmt::Display for Type {
@@ -120,7 +119,6 @@ impl fmt::Display for Type {
         match self.clone() {
             Type::S(data) => write!(f, "{}", data),
             Type::I(data) => write!(f, "{}", data),
-            Type::C(data) => write!(f, "{}", data),
         }
     }
 }

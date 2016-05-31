@@ -167,12 +167,7 @@ impl Interpreter {
                         input = input.trim().to_owned();
                         let val = match input.parse::<i64>() {
                             Ok(n) => Type::I(n),
-                            Err(_) => {
-                                match input.len() {
-                                    1 => Type::C(input.pop().unwrap()),
-                                    _ => Type::S(input),
-                                }
-                            },
+                            Err(_) => Type::S(input),
                         };
                         self.value = val.clone();
                     },
