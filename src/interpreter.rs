@@ -2,14 +2,13 @@ use ast::Ast;
 use commands::{Command, Type};
 
 use std::io;
-use std::intrinsics::discriminant_value;
 
 pub struct Interpreter {
     values: Vec<Vec<Type>>,
     pointer: usize,
     index: usize,
     value: Type,
-    int: u64,
+    int: Type,
     pc: usize,
     last: usize,
     dojump: bool,
@@ -24,7 +23,7 @@ impl Interpreter {
         Interpreter {
             pointer: 0,
             index: 0,
-            int: 1,
+            int: Type::I(1),
             pc: 0,
             last: 0,
             values: Vec::new(),
@@ -42,10 +41,7 @@ impl Interpreter {
                 match value.get(self.index) {
                     Some(typ) => {
                         if int {
-                            match typ {
-                                &Type::I(i) => self.int = i as u64,
-                                _ => (),
-                            }
+                            self.int = typ.clone();
                         } else {
                             self.value = typ.clone();
                         }
@@ -61,7 +57,7 @@ impl Interpreter {
         }
         if !existed {
             if int {
-                self.int = 0;
+                self.int = Type::I(0);
             } else {
                 self.value = Type::I(0);
             }
@@ -73,7 +69,7 @@ impl Interpreter {
             self.values.resize(self.pointer + 1, Vec::new());
             let mut vec = vec![Type::I(0); self.index + 1];
             if int {
-                vec[self.index] = Type::I(self.int as i64);
+                vec[self.index] = self.int.clone();
             } else {
                 vec[self.index] = self.value.clone();
             }
@@ -86,7 +82,7 @@ impl Interpreter {
         }
 
         if int {
-            self.values[self.pointer][self.index] = Type::I(self.int as i64);
+            self.values[self.pointer][self.index] = self.int.clone();
         } else {
             self.values[self.pointer][self.index] = self.value.clone();
         }
@@ -117,11 +113,17 @@ impl Interpreter {
                 Command::Grp(_) => {
 
                     //interpret command
-                    while self.int > 0 {
+                    let mut loops = match self.int {
+                        Type::I(int) => int,
+                        _ => 1,
+                    };
+                    while loops > 0 {
+                        if loops == 1 {
+                            self.int = Type::I(1);
+                        }
                         self.interpret(&command);
-                        self.int = self.int - 1;
+                        loops = loops - 1;
                     }
-                    self.int = 1;
                 },
                 command => {
                     self.interpret(&command);
@@ -201,12 +203,19 @@ impl Interpreter {
                 }
                 self.get_value(true);
             },
-            &Command::Ins(ref val) => {
+            &Command::InsV(ref val) => {
                 if !self.rep {
                     self.last = self.pc;
                 }
                 self.value = val.clone();
                 self.set_value(false);
+            },
+            &Command::InsI(ref val) => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
+                self.int = val.clone();
+                self.set_value(true);
             },
             &Command::Incr => {
                 if !self.rep {
@@ -235,41 +244,28 @@ impl Interpreter {
                 }
             },
             &Command::Plus => {
-                match self.value {
-                    Type::I(v) => {
-                        self.value = Type::I(v + self.int as i64);
-                    },
-                    _ => (),
-                }
-                self.int = 1;
+                let val = self.value.get_int();
+                let int = self.int.get_int();
+                self.value = Type::I(val + int);
+                self.int = Type::I(1);
             },
             &Command::Minus => {
-                match self.value {
-                    Type::I(v) => {
-                        self.value = Type::I(v - self.int as i64);
-                    },
-                    _ => (),
-                }
-                self.int = 1;
+                let val = self.value.get_int();
+                let int = self.int.get_int();
+                self.value = Type::I(val - int);
+                self.int = Type::I(1);
             },
             &Command::Times => {
-                match self.value {
-                    Type::I(v) => {
-                        self.value = Type::I(v * self.int as i64);
-                    },
-                    _ => (),
-                }
-                self.int = 1;
+                let val = self.value.get_int();
+                let int = self.int.get_int();
+                self.value = Type::I(val * int);
+                self.int = Type::I(1);
             },
             &Command::Divide => {
-                match self.value {
-                    Type::I(v) => {
-                        let modu = v % self.int as i64;
-                        self.value = Type::I(v / self.int as i64);
-                        self.int = modu as u64;
-                    },
-                    _ => (),
-                }
+                let val = self.value.get_int();
+                let int = self.int.get_int();
+                self.value = Type::I(val / int);
+                self.int = Type::I(val % int);
             },
             &Command::Mark(ref mark) => {
                 match mark {
@@ -284,11 +280,11 @@ impl Interpreter {
                 match mark {
                     &'a' ... 'z' => {
                         self.pointer = mark.to_digit(36).unwrap() as usize - 10;
-                        self.index = self.int as usize;
+                        self.index = self.int.get_int() as usize;
                     },
                     _ => { panic!("mark must be a to z"); },
                 }
-                self.int = 1;
+                self.int = Type::I(1);
             },
             &Command::NMar => {
                 self.pointer = self.pointer + 1;
@@ -308,7 +304,7 @@ impl Interpreter {
                 self.index = self.index + 1;
             },
             &Command::PInd => {
-                if self.index ==0 {
+                if self.index == 0 {
                     panic!("Can't decrement index, already 0");
                 }
                 self.index = self.index - 1;
@@ -331,7 +327,7 @@ impl Interpreter {
                     }
                     self.pc = new_pc;
                 }
-                if self.int == 1 {
+                if self.int.get_int() == 1 {
                     self.dojump = true;
                 }
             },
@@ -354,7 +350,7 @@ impl Interpreter {
                     }
                     self.pc = new_pc;
                 }
-                if self.int == 1 {
+                if self.int.get_int() == 1 {
                     self.dojump = true;
                 }
             },
@@ -379,7 +375,7 @@ impl Interpreter {
                 if self.dojump {
                     let mut new_pc = self.pc + 1;
                     for i in new_pc..self.program.len() {
-                        if unsafe { discriminant_value(&self.program[i]) == discriminant_value(&**next) } {
+                        if self.program[i].discriminant() == (**next).discriminant() {
                             new_pc = i;
                             found = true;
                             break;
@@ -389,7 +385,7 @@ impl Interpreter {
                         self.pc = new_pc;
                     }
                 }
-                if self.int == 1 {
+                if self.int.get_int() == 1 {
                     self.dojump = true;
                     if found {
                         self.pc = self.pc - 1;
@@ -401,7 +397,7 @@ impl Interpreter {
                 if self.dojump {
                     let mut new_pc = self.pc + 1;
                     for i in (0..new_pc).rev() {
-                        if unsafe { discriminant_value(&self.program[i]) == discriminant_value(&**prev) } {
+                        if self.program[i].discriminant() == (**prev).discriminant() {
                             new_pc = i - 1;
                             found = true;
                             break;
@@ -411,47 +407,32 @@ impl Interpreter {
                         self.pc = new_pc;
                     }
                 }
-                if self.int == 1 {
+                if self.int.get_int() == 1 {
                     self.dojump = true;
                 }
             },
             &Command::Con => {
-                self.dojump = match self.value {
-                    Type::I(int) => self.int == int as u64,
-                    _ => false,
-                };
-                self.int = 1;
+                self.dojump = self.value == self.int;
+                self.int = Type::I(1);
             },
             &Command::NCon => {
-                self.dojump = match self.value {
-                    Type::I(int) => self.int != int as u64,
-                    _ => true,
-                };
-                self.int = 1;
+                self.dojump = self.value != self.int;
+                self.int = Type::I(1);
             },
             &Command::LCon => {
-                self.dojump = match self.value {
-                    Type::I(int) => int > self.int as i64,
-                    _ => false,
-                };
-                self.int = 1;
+                self.dojump = self.value > self.int;
+                self.int = Type::I(1);
             },
             &Command::GCon => {
-                self.dojump = match self.value {
-                    Type::I(int) => int <  self.int as i64,
-                    _ => false,
-                };
-                self.int = 1;
+                self.dojump = self.value < self.int;
+                self.int = Type::I(1);
             },
-            &Command::Int(ref int) => { self.int = int.clone(); },
+            &Command::Int(ref int) => { self.int = Type::I(int.clone() as i64); },
             &Command::V2I => {
-                match self.value {
-                    Type::I(int) => { self.int = int as u64; },
-                    _ => { panic!("value not an integer"); },
-                }
+                self.int = self.value.clone();
             },
             &Command::I2V => {
-                self.value = Type::I(self.int as i64);
+                self.value = self.int.clone();
             }
             &Command::Grp(ref group) => {
                 self.do_group(group);
@@ -467,8 +448,8 @@ impl Interpreter {
     }
 
     fn do_group(&mut self, group: &Ast) {
-        let temp_int = self.int;
-        self.int = 1;
+        let temp_int = self.int.clone();
+        self.int = Type::I(1);
         let temp_pc = self.pc;
         self.pc = 0;
         let temp_program = self.program.clone();
@@ -499,11 +480,17 @@ impl Interpreter {
                 Command::Grp(_) => {
 
                     //interpret command
-                    while self.int > 0 {
+                    let mut loops = match self.int {
+                        Type::I(int) => int,
+                        _ => 1,
+                    };
+                    while loops > 0 {
+                        if loops == 1 {
+                            self.int = Type::I(1);
+                        }
                         self.interpret(&command);
-                        self.int = self.int - 1;
+                        loops = loops - 1;
                     }
-                    self.int = 1;
                 },
                 command => {
                     self.interpret(&command);
@@ -511,7 +498,7 @@ impl Interpreter {
             }
             self.pc = self.pc + 1;
         }
-        self.int = temp_int;
+        self.int = temp_int.clone();
         self.pc = temp_pc;
         self.program = temp_program;
     }

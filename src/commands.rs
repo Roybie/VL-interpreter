@@ -6,6 +6,7 @@ use std::fmt;
  */
 
 #[derive(Debug, Clone, PartialEq)]
+#[repr(u32)]
 pub enum Command {
     // stdio
     VOut,           //w
@@ -18,7 +19,8 @@ pub enum Command {
     PutI,           // P put Int in selected memory
     Yank,           // y value from selected memory
     YankI,          // Y int from selected memory
-    Ins(Type),      // i<string>
+    InsV(Type),     // i<string>
+    InsI(Type),     // I<string>
     Incr,           // a
     Decr,           // x
     //Arithmetic
@@ -56,6 +58,10 @@ pub enum Command {
 }
 
 impl Command {
+    pub fn discriminant(&self) -> u32 {
+        unsafe { *(self as *const Self as *const u32) }
+    }
+
     pub fn from_char(inp: char) -> Command {
         match inp {
             'w' => Command::VOut,
@@ -67,7 +73,8 @@ impl Command {
             'P' => Command::PutI,
             'y' => Command::Yank,
             'Y' => Command::YankI,
-            'i' => Command::Ins(Type::C('a')),
+            'i' => Command::InsV(Type::I(0)),
+            'I' => Command::InsI(Type::I(0)),
             'a' => Command::Incr,
             'x' => Command::Decr,
             '+' => Command::Plus,
@@ -101,7 +108,7 @@ impl Command {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub enum Type {
     S(String),
     I(i64),
@@ -114,6 +121,15 @@ impl fmt::Display for Type {
             Type::S(data) => write!(f, "{}", data),
             Type::I(data) => write!(f, "{}", data),
             Type::C(data) => write!(f, "{}", data),
+        }
+    }
+}
+
+impl Type {
+    pub fn get_int(&self) -> i64 {
+        match self {
+            &Type::I(int) => int,
+            _ => panic!("Tried to get int value of a string")
         }
     }
 }

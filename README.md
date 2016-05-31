@@ -5,7 +5,7 @@ v.0.2alpha
 
 ### Requirements
 
-Rust nightly
+Latest Rust Stable
 
 ### Build/Run
 
@@ -78,18 +78,20 @@ Commands:
 `Y` _(repeatable)_ Copies current selected memory value into \<int>
 
 `p` _(repeatable)_ Copies \<value> into currently selected memory
-  		  
+
 `P` _(repeatable)_ Copies \<int> into currently selected memory
 
 `i` _(repeatable)_ Enter insert mode, insert characters following i up until unescaped ('\') ';' into \<value> and currently selected memory
 
-`;` _(insert mode only)_ Escape insert mode setting \<value>
+`I` _(repeatable)_ Enter insert mode, insert characters following i up until unescaped ('\') ';' into \<int> and currently selected memory
+
+`;` _(insert mode only)_ Escape insert mode setting
 
 `\` _(insert mode only)_ Treat next ; as normal part of string
 
-`a` _(loopable, repeatable)_ Increment currently selected memory value by 1 if Integer or Character type and set \<value>
+`a` _(loopable, repeatable)_ Increment currently selected memory value by 1 if Integer type and set \<value>
 
-`x` _(loopable, repeatable)_ Decrement currently selected memory value by 1 if Integer or Character type and set \<value>
+`x` _(loopable, repeatable)_ Decrement currently selected memory value by 1 if Integer type and set \<value>
 
 `v` Copy \<int> to \<value>
 

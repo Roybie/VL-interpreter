@@ -41,7 +41,8 @@ impl Parser {
 
     fn parse_command(&mut self) -> Command {
         match Command::from_char(self.next_char(true)) {
-            Command::Ins(_) => self.parse_ins(),
+            Command::InsV(_) => self.parse_insv(),
+            Command::InsI(_) => self.parse_insi(),
             Command::Mark(_) => self.parse_mark(),
             Command::Ind(_) => self.parse_ind(),
             Command::Next(_) => self.parse_next(),
@@ -53,7 +54,7 @@ impl Parser {
         }
     }
 
-    fn parse_ins(&mut self) -> Command {
+    fn parse_insi(&mut self) -> Command {
         //find until first unescaped !
         let mut insert = String::new();
         let mut next;
@@ -66,21 +67,42 @@ impl Parser {
             if next == '\\' && self.next_char(false) == ';' {
                 next = self.next_char(true);
             } else if next == ';' {
-                return self.get_ins_type(insert);
+                return self.get_insi_type(insert);
             }
             insert.push(next);
         }
     }
 
-    fn get_ins_type(&mut self, mut insert: String) -> Command {
-        match insert.parse::<i64>() {
-            Ok(n) => Command::Ins(Type::I(n)),
-            Err(_) => {
-                match insert.len() {
-                    1 => Command::Ins(Type::C(insert.pop().unwrap())),
-                    _ => Command::Ins(Type::S(insert)),
-                }
+    fn parse_insv(&mut self) -> Command {
+        //find until first unescaped !
+        let mut insert = String::new();
+        let mut next;
+
+        loop {
+            if self.eof() {
+                panic!("unclosed insert, reached end of file");
             }
+            next = self.next_char(true);
+            if next == '\\' && self.next_char(false) == ';' {
+                next = self.next_char(true);
+            } else if next == ';' {
+                return self.get_insv_type(insert);
+            }
+            insert.push(next);
+        }
+    }
+
+    fn get_insv_type(&mut self, insert: String) -> Command {
+        match insert.parse::<i64>() {
+            Ok(n) => Command::InsV(Type::I(n)),
+            Err(_) => Command::InsV(Type::S(insert)),
+        }
+    }
+
+    fn get_insi_type(&mut self, insert: String) -> Command {
+        match insert.parse::<i64>() {
+            Ok(n) => Command::InsI(Type::I(n)),
+            Err(_) => Command::InsI(Type::S(insert)),
         }
     }
 
