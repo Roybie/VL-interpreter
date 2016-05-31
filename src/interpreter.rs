@@ -434,8 +434,10 @@ impl Interpreter {
             },
             &Command::Rep => {
                 self.rep = true;
-                let command = self.program[self.last].clone();
-                self.interpret(&command);
+                if self.last > 0 {
+                    let command = self.program[self.last].clone();
+                    self.interpret(&command);
+                }
                 self.rep = false;
             }
             _ => (),
@@ -443,6 +445,8 @@ impl Interpreter {
     }
 
     fn do_group(&mut self, group: &Ast) {
+        let temp_last = self.last;
+        self.last = 0;
         let temp_int = self.int.clone();
         self.int = Type::I(1);
         let temp_pc = self.pc;
@@ -493,6 +497,7 @@ impl Interpreter {
             }
             self.pc = self.pc + 1;
         }
+        self.last = temp_last;
         self.int = temp_int.clone();
         self.pc = temp_pc;
         self.program = temp_program;
