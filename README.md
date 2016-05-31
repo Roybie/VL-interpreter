@@ -27,6 +27,14 @@ In source string mode (-s) when a ' is wanted in the string you must replace it 
 
 see examples folder for source code examples
 
+Some more examples:
+
+[Project Euler solutions](https://github.com/Roybie/ProjectEulerVL "Project Euler VL Solutions")
+
+#### Extras
+
+[Vim syntax higlighting plugin](https://github.com/benbrunton/vl.vim "vl.vim")
+
 ### TODO:
 
 * Tests! Make use of rusts easy convenient test ability.
