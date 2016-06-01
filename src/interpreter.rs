@@ -4,7 +4,7 @@ use commands::{Command, Type};
 use std::io;
 
 pub struct Interpreter {
-    values: Vec<Vec<Type>>,
+    values: [Vec<Type>; 26],
     pointer: usize,
     index: usize,
     value: Type,
@@ -26,7 +26,7 @@ impl Interpreter {
             int: Type::I(1),
             pc: 0,
             last: 0,
-            values: Vec::new(),
+            values: [vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!(),vec!()],
             value: Type::I(0),
             dojump: true,
             rep: false,
@@ -35,48 +35,25 @@ impl Interpreter {
     }
 
     fn get_value(&mut self, int: bool) {
-        let mut existed = true;
-        match self.values.get(self.pointer) {
-            Some(value) => {
-                match value.get(self.index) {
-                    Some(typ) => {
-                        if int {
-                            self.int = typ.clone();
-                        } else {
-                            self.value = typ.clone();
-                        }
-                    },
-                    None => {
-                        existed = false;
-                    },
+        match self.values[self.pointer].get(self.index) {
+            Some(typ) => {
+                if int {
+                    self.int = typ.clone();
+                } else {
+                    self.value = typ.clone();
                 }
             },
             None => {
-                existed = false;
+                if int {
+                    self.int = Type::I(0);
+                } else {
+                    self.value = Type::I(0);
+                }
             },
-        }
-        if !existed {
-            if int {
-                self.int = Type::I(0);
-            } else {
-                self.value = Type::I(0);
-            }
         }
     }
 
     fn set_value(&mut self, int: bool) {
-        if self.values.len() < self.pointer + 1 {
-            self.values.resize(self.pointer + 1, Vec::new());
-            let mut vec = vec![Type::I(0); self.index + 1];
-            if int {
-                vec[self.index] = self.int.clone();
-            } else {
-                vec[self.index] = self.value.clone();
-            }
-            self.values[self.pointer] = vec;
-            return;
-        }
-
         if self.values[self.pointer].len() < self.index + 1 {
             self.values[self.pointer].resize(self.index + 1, Type::I(0));
         }
@@ -97,8 +74,6 @@ impl Interpreter {
                     break;
                 },
                 //loopable commands
-                //Command::Out |
-                //Command::OutL |
                 Command::Incr |
                 Command::Decr |
                 Command::NMar |
@@ -498,7 +473,7 @@ impl Interpreter {
             self.pc = self.pc + 1;
         }
         self.last = temp_last;
-        self.int = temp_int.clone();
+        self.int = temp_int;
         self.pc = temp_pc;
         self.program = temp_program;
     }
