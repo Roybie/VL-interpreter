@@ -213,6 +213,39 @@ impl Interpreter {
                     _ => (),
                 }
             },
+            &Command::Split => {
+                if !self.rep {
+                    self.last = self.pc;
+                }
+                match self.value {
+                    Type::S(ref s) => {
+                        self.values[self.pointer] = s.chars().map(|c| Type::S(c.to_string())).collect();
+                    },
+                    _ => (),
+                }
+            },
+            &Command::Conv => {
+                let new_val;
+                match self.value {
+                    Type::I(i) => {
+                        new_val = Type::S(i.to_string());
+                    },
+                    Type::S(ref s) => {
+                        new_val = match s.parse::<i64>() {
+                            Ok(n) => Type::I(n),
+                            Err(_) => panic!("value can't be converted to int"),
+                        };
+                    },
+                }
+                self.value = new_val;
+            },
+            &Command::SLen => {
+                let len = match self.value {
+                    Type::S(ref s) => Type::I(s.len() as i64),
+                    _ => panic!("Can't get length of int"),
+                };
+                self.value = len;
+            },
             &Command::Plus => {
                 let val = self.value.get_int();
                 let int = self.int.get_int();
@@ -482,6 +515,6 @@ impl Interpreter {
 pub fn run(program: Ast) -> usize {
     let mut interpreter = Interpreter::new(program);
     interpreter.run();
-    //println!("{:?}", interpreter.values);
+    println!("{:?}", interpreter.values);
     0
 }
