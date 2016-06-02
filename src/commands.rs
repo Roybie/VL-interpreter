@@ -29,7 +29,6 @@ pub enum Command {
     Times,
     Divide,
     //string specifics
-    Split,
     Conv,
     SLen,
     // Manipulate <pointer> / <value>
@@ -81,9 +80,8 @@ impl Command {
             'I' => Command::InsI(Type::I(0)),
             'a' => Command::Incr,
             'x' => Command::Decr,
-            '@' => Command::Split,
             '=' => Command::Conv,
-            'e' => Command::SLen,
+            '@' => Command::SLen,
             '+' => Command::Plus,
             '-' => Command::Minus,
             '*' => Command::Times,
