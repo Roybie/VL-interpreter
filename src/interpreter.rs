@@ -233,22 +233,44 @@ impl Interpreter {
                 };
             },
             &Command::Plus => {
-                let val = self.value.get_int();
-                let int = self.int.get_int();
-                self.value = Type::I(val + int);
-                self.int = Type::I(1);
+                self.value = match self.value {
+                    Type::I(i) => {
+                        let int = self.int.get_int();
+                        self.int = Type::I(1);
+                        Type::I(i + int)
+                    },
+                    Type::S(ref s) => {
+                        let int = self.int.get_str();
+                        Type::S(s.to_owned() + &int)
+                    },
+                }
             },
             &Command::Minus => {
-                let val = self.value.get_int();
-                let int = self.int.get_int();
-                self.value = Type::I(val - int);
-                self.int = Type::I(1);
+                self.value = match self.value {
+                    Type::I(i) => {
+                        let int = self.int.get_int();
+                        self.int = Type::I(1);
+                        Type::I(i - int)
+                    },
+                    Type::S(ref s) => {
+                        let int = self.int.get_int();
+                        let (first, last) = s.split_at(int as usize);
+                        self.int = Type::S(last.to_owned());
+                        Type::S(first.to_owned())
+                    },
+                }
             },
             &Command::Times => {
-                let val = self.value.get_int();
-                let int = self.int.get_int();
-                self.value = Type::I(val * int);
-                self.int = Type::I(1);
+                self.value = match self.value {
+                    Type::I(i) => {
+                        let int = self.int.get_int();
+                        self.int = Type::I(1);
+                        Type::I(i * int)
+                    },
+                    Type::S(_) => {
+                        Type::S(self.values[self.pointer].iter().map(|s| s.get_str()).collect::<Vec<_>>().join(""))
+                    },
+                };
             },
             &Command::Divide => {
                 match self.value {
@@ -507,6 +529,6 @@ impl Interpreter {
 pub fn run(program: Ast) -> usize {
     let mut interpreter = Interpreter::new(program);
     interpreter.run();
-    println!("{:?}", interpreter.values);
+    //println!("{:?}", interpreter.values);
     0
 }

@@ -97,7 +97,13 @@ Commands:
 
 `V` Copy \<value> to \<int>
 
-#### Arithmetic
+#### String manipulation
+
+`@` Copy length of string held in \<value> into \<int>
+
+`=` Convert \<value> from string to int or int to string
+
+#### Arithmetic when \<value> is int
 
 `+` _(resets int)_ Set \<value> to \<value> + \<int>
 
@@ -108,6 +114,16 @@ Commands:
 `/` Set \<value> to \<value> / \<int> and set \<int> to \<value> % \<int>
 
 Divide is unique in that it sets the internal \<int> register and the \<value> register
+
+#### Arithmetic when \<value> is string
+
+`+` Set \<value> to concatination of \<value> + \<int>
+
+`-` Splits string in \<value> at point \<int> setting \<value> first part and \<int> to second part
+
+`*` Set \<value> to the join of the current mark if all set values in mark are strings
+
+`/` Explode string in \<value> setting the current memory mark to the individual characters (deletes any current values saved in that mark)
 
 #### Program Flow
 

@@ -135,4 +135,10 @@ impl Type {
             _ => panic!("Tried to get int value of a string")
         }
     }
+    pub fn get_str(&self) -> String {
+        match self {
+            &Type::S(ref str) => str.to_owned(),
+            &Type::I(i) => i.to_string(),
+        }
+    }
 }

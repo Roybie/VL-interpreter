@@ -23,7 +23,7 @@ fn main() {
 
     if &args[1] == "-r" {
         //repl mode!
-        println!("VL v.0.2alpha");
+        println!("VL v.0.3alpha");
         println!("ctrl-c to exit");
         let mut input:String;
         loop {
