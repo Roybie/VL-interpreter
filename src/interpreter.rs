@@ -268,7 +268,11 @@ impl Interpreter {
                         Type::I(i * int)
                     },
                     Type::S(_) => {
-                        Type::S(self.values[self.pointer].iter().map(|s| s.get_str()).collect::<Vec<_>>().join(""))
+                        let spl = match self.int {
+                            Type::I(_) => "".to_owned(),
+                            Type::S(ref s) => s.to_owned(),
+                        };
+                        Type::S(self.values[self.pointer].iter().map(|s| s.get_str()).collect::<Vec<_>>().join(&spl))
                     },
                 };
             },
@@ -280,7 +284,11 @@ impl Interpreter {
                         self.int = Type::I(i % int);
                     },
                     Type::S(ref s) => {
-                        self.values[self.pointer] = s.chars().map(|c| Type::S(c.to_string())).collect();
+                        let spl = match self.int {
+                            Type::I(_) => "".to_owned(),
+                            Type::S(ref s) => s.to_owned(),
+                        };
+                        self.values[self.pointer] = s.split(&spl).filter(|s| s.len()>0).map(|s| Type::S(s.to_owned())).collect();
                     },
                 }
             },

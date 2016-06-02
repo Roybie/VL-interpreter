@@ -121,9 +121,9 @@ Divide is unique in that it sets the internal \<int> register and the \<value> r
 
 `-` Splits string in \<value> at point \<int> setting \<value> first part and \<int> to second part
 
-`*` Set \<value> to the join of the current mark if all set values in mark are strings
+`*` Flatten the current mark if all set values in mark are strings into \<value> with placing a separator between each defined in \<int>, or "" if \<int> is not a string
 
-`/` Explode string in \<value> setting the current memory mark to the individual characters (deletes any current values saved in that mark)
+`/` Explode string in \<value> splitting on the string in \<int> or "" if \<int> is not a string
 
 #### Program Flow
 
