@@ -37,8 +37,8 @@ Some more examples:
 
 ### TODO:
 
-* Tests! Make use of rusts easy convenient test ability.
-* String manipulation. A language based on vim commands seems like it should have decent string manipulation.
+* ~~Tests! Make use of rusts easy convenient test ability.~~
+* ~~String manipulation.~~
 * Basic File IO.
 
 ### VL language
