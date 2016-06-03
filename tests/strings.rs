@@ -2,7 +2,7 @@ use std::process::Command;
 
 #[test]
 fn int_to_string() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("i9;=w")
         .output()
@@ -13,7 +13,7 @@ fn int_to_string() {
 
 #[test]
 fn string_to_int() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("i9;==w")
         .output()
@@ -21,7 +21,7 @@ fn string_to_int() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "9");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("iHi;=")
         .output()
@@ -31,7 +31,7 @@ fn string_to_int() {
 
 #[test]
 fn string_length() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("istring;@W")
         .output()
@@ -39,7 +39,7 @@ fn string_length() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "6");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("i;@W")
         .output()
@@ -47,7 +47,7 @@ fn string_length() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "0");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("i99;@W")
         .output()

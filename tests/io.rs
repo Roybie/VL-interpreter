@@ -3,14 +3,14 @@ use std::process::Command;
 
 #[test]
 fn w() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("w")
         .output()
         .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
     assert_eq!(String::from_utf8_lossy(&output.stdout), "0");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("iHi;w")
         .output()
@@ -20,7 +20,7 @@ fn w() {
 
 #[test]
 fn l() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("l")
         .output()
@@ -28,7 +28,7 @@ fn l() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "0\n");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("iHi;l")
         .output()
@@ -39,7 +39,7 @@ fn l() {
 
 #[test]
 fn W() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("W")
         .output()
@@ -47,7 +47,7 @@ fn W() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "1");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("IHi;W")
         .output()
@@ -58,7 +58,7 @@ fn W() {
 
 #[test]
 fn L() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("L")
         .output()
@@ -66,7 +66,7 @@ fn L() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "1\n");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("IHi;L")
         .output()

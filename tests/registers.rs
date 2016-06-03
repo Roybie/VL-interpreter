@@ -3,7 +3,7 @@ use std::process::Command;
 
 #[test]
 fn p_and_y() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("p")
         .output()
@@ -11,7 +11,7 @@ fn p_and_y() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("y")
         .output()
@@ -19,7 +19,7 @@ fn p_and_y() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("a]p]yw[yw")
         .output()
@@ -30,7 +30,7 @@ fn p_and_y() {
 
 #[test]
 fn P_and_Y() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("P")
         .output()
@@ -38,7 +38,7 @@ fn P_and_Y() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("Y")
         .output()
@@ -46,7 +46,7 @@ fn P_and_Y() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("3P1]YW1[YW")
         .output()
@@ -57,7 +57,7 @@ fn P_and_Y() {
 
 #[test]
 fn i() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("i99;wyw")
         .output()
@@ -68,7 +68,7 @@ fn i() {
 
 #[test]
 fn I() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("I99;Wyw")
         .output()
@@ -79,7 +79,7 @@ fn I() {
 
 #[test]
 fn a() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("awyw")
         .output()
@@ -87,7 +87,7 @@ fn a() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "11");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("10aw")
         .output()
@@ -98,7 +98,7 @@ fn a() {
 
 #[test]
 fn x() {
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("xwyw")
         .output()
@@ -106,7 +106,7 @@ fn x() {
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "-1-1");
 
-    let output = Command::new("vl")
+    let output = Command::new("./target/debug/vl")
         .arg("-s")
         .arg("10xw")
         .output()
