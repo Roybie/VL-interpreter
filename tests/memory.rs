@@ -1,125 +1,10 @@
-#![allow(non_snake_case)]
 use std::process::Command;
 
 #[test]
-fn p_and_y() {
+fn mark() {
     let output = Command::new("./target/debug/vl")
         .arg("-s")
-        .arg("p")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
-
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("y")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
-
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("a]p]yw[yw")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "01");
-}
-
-#[test]
-fn P_and_Y() {
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("P")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
-
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("Y")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
-
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("3P1]YW1[YW")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "03");
-}
-
-#[test]
-fn i() {
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("i99;wyw")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "9999");
-}
-
-#[test]
-fn I() {
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("I99;Wyw")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "9999");
-}
-
-#[test]
-fn a() {
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("awyw")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "11");
-
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("10aw")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "10");
-}
-
-#[test]
-fn x() {
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("xwyw")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "-1-1");
-
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("10xw")
-        .output()
-        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
-    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "-10");
-}
-
-#[test]
-fn v() {
-    let output = Command::new("./target/debug/vl")
-        .arg("-s")
-        .arg("7wvw")
+        .arg("i7;'byw'ayw")
         .output()
         .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
@@ -127,28 +12,141 @@ fn v() {
 
     let output = Command::new("./target/debug/vl")
         .arg("-s")
-        .arg("IHello;wvw")
+        .arg("'a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z")
         .output()
         .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "0Hello");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("'0")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() > 0, "stderr should exist");
 }
 
 #[test]
-fn V() {
+fn index() {
     let output = Command::new("./target/debug/vl")
         .arg("-s")
-        .arg("i7;WVW")
+        .arg("i7;1`ayw0`ayw")
         .output()
         .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "17");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "07");
 
     let output = Command::new("./target/debug/vl")
         .arg("-s")
-        .arg("iHello;WVW")
+        .arg("500`a")
         .output()
         .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
     assert!(output.stderr.len() == 0, "stderr shouldn't exist");
-    assert_eq!(String::from_utf8_lossy(&output.stdout), "1Hello");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("1`6")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() > 0, "stderr should exist");
+}
+
+#[test]
+fn next_mark() {
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("]")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("'di7;'ayw3]yw")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "07");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("i7;25]yw]yw")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "07");
+}
+
+#[test]
+fn prev_mark() {
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("[")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("i7;'dyw3[yw")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "07");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("i7;[yw25[yw")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "07");
+}
+
+#[test]
+fn next_index() {
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("}")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("10`ai7;'ayw10}yw")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "07");
+}
+
+#[test]
+fn prev_index() {
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("}{")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("{")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() > 0, "stderr should exist");
+
+    let output = Command::new("./target/debug/vl")
+        .arg("-s")
+        .arg("i7;10`ayw10{yw")
+        .output()
+        .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
+    assert_eq!(String::from_utf8_lossy(&output.stdout), "07");
 }

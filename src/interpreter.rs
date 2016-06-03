@@ -313,14 +313,14 @@ impl Interpreter {
             },
             &Command::NMar => {
                 self.pointer = self.pointer + 1;
-                if self.pointer > 26 {
+                if self.pointer > 25 {
                     self.pointer = 0;
                 }
                 self.index = 0;
             },
             &Command::PMar => {
                 if self.pointer == 0 {
-                    self.pointer = 27;
+                    self.pointer = 26;
                 }
                 self.pointer = self.pointer - 1;
                 self.index = 0;
@@ -420,20 +420,21 @@ impl Interpreter {
             &Command::Prev(ref prev) => {
                 let mut found = false;
                 if self.dojump {
-                    let mut new_pc = self.pc + 1;
+                    let mut new_pc = self.pc;
                     for i in (0..new_pc).rev() {
                         if self.program[i].discriminant() == (**prev).discriminant() {
-                            new_pc = i - 1;
+                            new_pc = i;
                             found = true;
                             break;
                         }
                     }
-                    if found {
-                        self.pc = new_pc;
-                    }
+                    self.pc = new_pc;
                 }
                 if self.int.get_int() == 1 {
                     self.dojump = true;
+                    if found {
+                        self.pc = self.pc - 1;
+                    }
                 }
             },
             &Command::Con => {

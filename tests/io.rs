@@ -8,6 +8,7 @@ fn w() {
         .arg("w")
         .output()
         .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "0");
 
     let output = Command::new("./target/debug/vl")
@@ -15,6 +16,7 @@ fn w() {
         .arg("iHi;w")
         .output()
         .unwrap_or_else(|e| { panic!("failed to execute process: {}", e) });
+    assert!(output.stderr.len() == 0, "stderr shouldn't exist");
     assert_eq!(String::from_utf8_lossy(&output.stdout), "Hi");
 }
 
