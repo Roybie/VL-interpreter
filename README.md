@@ -1,7 +1,7 @@
 # VL Interpreter
 Interpreter for the VL language
 
-v.0.2alpha
+v.0.3alpha
 
 ### Requirements
 
