@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/Roybie/VL-interpreter.svg?branch=master)](https://travis-ci.org/Roybie/VL-interpreter)
 Interpreter for the VL language
 
-v.0.2alpha
+v.0.3alpha
 
 ### Requirements
 
