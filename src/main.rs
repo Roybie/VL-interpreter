@@ -21,6 +21,9 @@ fn main() {
         panic!("Please provide vl source file\n\nUsage: \"vl sourcefile.vl\"");
     }
 
+    let stdout = std::io::stdout();
+    let mut writer = stdout.lock();
+
     if &args[1] == "-r" {
         //repl mode!
         println!("VL v.0.3alpha");
@@ -34,7 +37,7 @@ fn main() {
                 Ok(_) => {
                     let inp = input.trim().to_owned() + "\n";
                     program = ast::parse(inp);
-                    interpreter::run(program);
+                    interpreter::run(program, &mut writer);
                 },
                 _ => (),
             }
@@ -64,7 +67,7 @@ fn main() {
     //println!("{}", s);
     program = ast::parse(s);
     //println!("{:?}", program);
-    interpreter::run(program);
+    interpreter::run(program, &mut writer);
 
 }
 

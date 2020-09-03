@@ -108,14 +108,14 @@ impl Parser {
 
     fn parse_mark(&mut self) -> Command {
         match self.next_char(true) {
-            c @ 'a'...'z' => Command::Mark(c),
+            c @ 'a'..='z' => Command::Mark(c),
             _ => { panic!("Can only use characters a to z as marks"); }
         }
     }
 
     fn parse_ind(&mut self) -> Command {
         match self.next_char(true) {
-            c @ 'a'...'z' => Command::Ind(c),
+            c @ 'a'..='z' => Command::Ind(c),
             _ => { panic!("Can only use characters a to z as index"); }
         }
     }
@@ -191,7 +191,7 @@ impl Parser {
 }
 
 pub fn parse(input: String) -> Ast {
-    let ast = Parser { pos: 0, input: input }.parse();
+    let ast = Parser { pos: 0, input }.parse();
 
     ast
 }
