@@ -163,7 +163,7 @@ Groups are _(loopable)_ and so performed \<int> times.
 
 `10(aw)`
 
-This sets \<int> to 10 then performs the following _(loopable)_ function ten times, in this case the group `(aW)` resulting in the numbers 1 to 10 being outputted.
+This sets \<int> to 10 then performs the following _(loopable)_ function ten times, in this case the group `(aw)` resulting in the numbers 1 to 10 being outputted.
 
 \<int> is 1 by default and reset to 1 after _(loopable)_ and _(resets int)_  commands, preserved otherwise.
 
