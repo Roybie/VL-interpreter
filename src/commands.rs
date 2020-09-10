@@ -102,7 +102,7 @@ impl Command {
             '!' => Command::NCon,
             '<' => Command::LCon,
             '>' => Command::GCon,
-            '0'...'9' => Command::Int(inp as u64),
+            '0'..='9' => Command::Int(inp as u64),
             'V' => Command::V2I,
             'v' => Command::I2V,
             '.' => Command::Rep,

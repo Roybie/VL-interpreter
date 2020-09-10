@@ -1,9 +1,10 @@
 use ast::Ast;
 use commands::{Command, Type};
+use std::io::Write;
 
 use std::io;
 
-pub struct Interpreter {
+pub struct Interpreter<'a, W: Write> {
     values: [Vec<Type>; 26],
     pointer: usize,
     index: usize,
@@ -13,13 +14,13 @@ pub struct Interpreter {
     last: usize,
     dojump: bool,
     rep: bool,
-
     program: Ast,
+    writer: &'a mut W
 }
 
-impl Interpreter {
+impl <'a, W: Write> Interpreter <'a, W>{
 
-    pub fn new(program: Ast) -> Interpreter {
+    pub fn new(program: Ast, writer: &'a mut W) -> Interpreter <'a, W> {
         Interpreter {
             pointer: 0,
             index: 0,
@@ -30,7 +31,8 @@ impl Interpreter {
             value: Type::I(0),
             dojump: true,
             rep: false,
-            program: program,
+            program,
+            writer,
         }
     }
 
@@ -115,25 +117,25 @@ impl Interpreter {
                 if !self.rep {
                     self.last = self.pc;
                 }
-                print!("{}", self.value);
+                let _ = write!(self.writer, "{}", self.value);
             },
             &Command::VOutL => {
                 if !self.rep {
                     self.last = self.pc;
                 }
-                println!("{}", self.value);
+                let _ = writeln!(self.writer, "{}", self.value);
             },
             &Command::IOut => {
                 if !self.rep {
                     self.last = self.pc;
                 }
-                print!("{}", self.int);
+                let _ = write!(self.writer, "{}", self.int);
             },
             &Command::IOutL => {
                 if !self.rep {
                     self.last = self.pc;
                 }
-                println!("{}", self.int);
+                let _ = writeln!(self.writer, "{}", self.int);
             },
             &Command::In => {
                 let mut input = String::new();
@@ -294,7 +296,7 @@ impl Interpreter {
             },
             &Command::Mark(ref mark) => {
                 match mark {
-                    &'a' ... 'z' => {
+                    &('a'..='z') => {
                         self.pointer = mark.to_digit(36).unwrap() as usize - 10;
                         self.index = 0;
                     },
@@ -303,7 +305,7 @@ impl Interpreter {
             },
             &Command::Ind(ref mark) => {
                 match mark {
-                    &'a' ... 'z' => {
+                    &('a'..='z') => {
                         self.pointer = mark.to_digit(36).unwrap() as usize - 10;
                         self.index = self.int.get_int() as usize;
                     },
@@ -535,9 +537,8 @@ impl Interpreter {
     }
 }
 
-pub fn run(program: Ast) -> usize {
-    let mut interpreter = Interpreter::new(program);
+pub fn run<W: Write>(program: Ast, writer: &mut W) -> usize {
+    let mut interpreter = Interpreter::new(program, writer);
     interpreter.run();
-    //println!("{:?}", interpreter.values);
     0
 }
