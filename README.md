@@ -161,7 +161,7 @@ Groups are _(loopable)_ and so performed \<int> times.
 
 \<int> can be set directly by an integer i.e.
 
-`10(aW)`
+`10(aw)`
 
 This sets \<int> to 10 then performs the following _(loopable)_ function ten times, in this case the group `(aW)` resulting in the numbers 1 to 10 being outputted.
 
